@@ -1,0 +1,458 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ห้องแสงน้อย 🌙 แผงควบคุมไฟน่ารัก</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fff3fa;
+    --bg-2: #ffeaf6;
+    --card: #ffffff;
+    --card-soft: #fff8fc;
+    --text: #4a3552;
+    --text-soft: #8a7a91;
+    --pink: #ff9fce;
+    --pink-deep: #ff7ab8;
+    --lavender: #c9b6ff;
+    --lavender-deep: #a98cff;
+    --mint: #9df0d3;
+    --mint-deep: #5fd9ae;
+    --yellow: #ffe08a;
+    --yellow-deep: #ffc94d;
+    --border: #ffd9ee;
+    --shadow: rgba(255, 130, 190, 0.18);
+    --on-glow: #fff1c2;
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --bg: #241b2e;
+      --bg-2: #2c2138;
+      --card: #322640;
+      --card-soft: #3a2c4a;
+      --text: #f5e9f7;
+      --text-soft: #c3aecb;
+      --border: #4a3a5c;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #241b2e;
+    --bg-2: #2c2138;
+    --card: #322640;
+    --card-soft: #3a2c4a;
+    --text: #f5e9f7;
+    --text-soft: #c3aecb;
+    --border: #4a3a5c;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+
+  html {
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100%;
+    background:
+      radial-gradient(circle at 15% 0%, var(--bg-2), transparent 55%),
+      radial-gradient(circle at 100% 20%, #ffe3f4 0%, transparent 40%),
+      var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 28px 16px 48px;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 560px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  header .eyebrow {
+    font-size: 14px;
+    color: var(--pink-deep);
+    font-weight: 700;
+  }
+
+  h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(28px, 7vw, 36px);
+    margin: 4px 0 6px;
+    color: var(--text);
+  }
+
+  header p {
+    color: var(--text-soft);
+    font-size: 15px;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .status-bar {
+    display: flex;
+    gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 14px 16px;
+    margin: 20px 0;
+    box-shadow: 0 10px 24px var(--shadow);
+    align-items: center;
+  }
+
+  .status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--mint-deep);
+    box-shadow: 0 0 0 5px rgba(95, 217, 174, 0.25);
+    flex-shrink: 0;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 5px rgba(95, 217, 174, 0.25); }
+    50% { box-shadow: 0 0 0 9px rgba(95, 217, 174, 0.12); }
+  }
+
+  .status-text {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .status-text span {
+    display: block;
+    font-weight: 400;
+    color: var(--text-soft);
+    font-size: 12.5px;
+    margin-top: 1px;
+  }
+
+  .readouts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .readout {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 14px 10px;
+    text-align: center;
+    box-shadow: 0 8px 18px var(--shadow);
+  }
+
+  .readout .emoji { font-size: 22px; }
+  .readout .val {
+    font-family: 'Baloo 2', cursive;
+    font-size: 20px;
+    margin-top: 4px;
+    color: var(--text);
+  }
+  .readout .lbl {
+    font-size: 11.5px;
+    color: var(--text-soft);
+    margin-top: 2px;
+    font-weight: 700;
+  }
+
+  .devices {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .device-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 18px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 10px 26px var(--shadow);
+    transition: box-shadow .25s ease, transform .25s ease;
+  }
+
+  .device-card.on {
+    box-shadow: 0 12px 30px var(--shadow), 0 0 0 2px var(--yellow) inset;
+    background: linear-gradient(180deg, var(--on-glow) -60%, var(--card) 55%);
+  }
+
+  .bulb {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+    background: var(--card-soft);
+    border: 1px solid var(--border);
+    transition: all .25s ease;
+  }
+
+  .device-card.on .bulb {
+    background: radial-gradient(circle, var(--yellow) 0%, var(--yellow-deep) 100%);
+    box-shadow: 0 0 18px 4px rgba(255, 201, 77, 0.55);
+  }
+
+  .device-info { flex: 1; min-width: 0; }
+
+  .device-name {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--text);
+  }
+
+  .device-sub {
+    font-size: 12.5px;
+    color: var(--text-soft);
+    margin-top: 2px;
+  }
+
+  .switch {
+    position: relative;
+    width: 56px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    position: absolute;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  .track {
+    position: absolute;
+    inset: 0;
+    background: #e7dced;
+    border-radius: 999px;
+    transition: background .25s ease;
+  }
+
+  :root[data-theme="dark"] .track,
+  @media (prefers-color-scheme: dark) { .track { background: #4a3a5c; } }
+
+  .knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: transform .25s ease, background .25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+  }
+
+  input:checked ~ .track {
+    background: linear-gradient(90deg, var(--pink), var(--lavender-deep));
+  }
+  input:checked ~ .knob {
+    transform: translateX(24px);
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 28px;
+    color: var(--text-soft);
+    font-size: 12px;
+  }
+
+  .reset-btn {
+    display: block;
+    margin: 18px auto 0;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+    font-family: 'Nunito', sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .reset-btn:hover { background: var(--card-soft); }
+
+  @media (max-width: 380px) {
+    .readouts { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .readout { padding: 10px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">🎀 แผงควบคุมของฉัน</div>
+    <h1>ไฟบ้านน่ารัก 💡✨</h1>
+    <p>แตะสวิตช์เพื่อสั่งเปิด-ปิดไฟแต่ละดวง แล้วดูค่าที่อุปกรณ์อ่านกลับมาแบบสด ๆ ด้านล่างนี้เลย</p>
+  </header>
+
+  <div class="status-bar">
+    <div class="status-dot" id="statusDot"></div>
+    <div class="status-text">
+      เชื่อมต่ออุปกรณ์แล้ว
+      <span id="statusSub">อัปเดตล่าสุดเมื่อสักครู่</span>
+    </div>
+  </div>
+
+  <div class="readouts">
+    <div class="readout">
+      <div class="emoji">🌡️</div>
+      <div class="val" id="tempVal">--°C</div>
+      <div class="lbl">อุณหภูมิ</div>
+    </div>
+    <div class="readout">
+      <div class="emoji">💧</div>
+      <div class="val" id="humVal">--%</div>
+      <div class="lbl">ความชื้น</div>
+    </div>
+    <div class="readout">
+      <div class="emoji">⚡</div>
+      <div class="val" id="powVal">--W</div>
+      <div class="lbl">กำลังไฟรวม</div>
+    </div>
+  </div>
+
+  <div class="devices" id="deviceList"></div>
+
+  <button class="reset-btn" id="resetBtn">↺ รีเซ็ตทุกดวงเป็นปิด</button>
+
+  <footer>ทุกอย่างบันทึกไว้ในเบราว์เซอร์นี้ แค่สำหรับคุณคนเดียวนะ 🐣</footer>
+</div>
+
+<script>
+(function () {
+  const DEVICES = [
+    { id: 'room',    name: 'ไฟห้องนอน',    sub: 'โคมหลัก · ฝั่งหัวเตียง', emojiOn: '💡', emojiOff: '🌙', watt: 9 },
+    { id: 'kitchen', name: 'ไฟครัว',        sub: 'แถบไฟใต้ตู้',           emojiOn: '🧡', emojiOff: '🕯️', watt: 12 },
+    { id: 'garden',  name: 'ไฟสวนหน้าบ้าน', sub: 'เสาไฟกลางแจ้ง',         emojiOn: '🌸', emojiOff: '🌿', watt: 15 },
+    { id: 'desk',    name: 'ไฟโต๊ะทำงาน',   sub: 'โคมตั้งโต๊ะ',            emojiOn: '⭐', emojiOff: '🌑', watt: 6 },
+  ];
+
+  const STORE_KEY = 'cute-light-control-state-v1';
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) { /* ignore, fall back to defaults */ }
+    const def = {};
+    DEVICES.forEach(d => def[d.id] = false);
+    return def;
+  }
+
+  function saveState(state) {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    } catch (e) { /* storage unavailable, continue silently */ }
+  }
+
+  let state = loadState();
+
+  const listEl = document.getElementById('deviceList');
+  const dotEl = document.getElementById('statusDot');
+  const subEl = document.getElementById('statusSub');
+  const tempEl = document.getElementById('tempVal');
+  const humEl = document.getElementById('humVal');
+  const powEl = document.getElementById('powVal');
+
+  function render() {
+    listEl.innerHTML = '';
+    DEVICES.forEach(d => {
+      const on = !!state[d.id];
+      const card = document.createElement('div');
+      card.className = 'device-card' + (on ? ' on' : '');
+      card.innerHTML = `
+        <div class="bulb">${on ? d.emojiOn : d.emojiOff}</div>
+        <div class="device-info">
+          <div class="device-name">${d.name}</div>
+          <div class="device-sub">${d.sub} · ${on ? 'เปิดอยู่ ' + d.watt + 'W' : 'ปิดอยู่'}</div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" data-id="${d.id}" ${on ? 'checked' : ''} aria-label="สวิตช์ ${d.name}">
+          <span class="track"></span>
+          <span class="knob">${on ? '💗' : ''}</span>
+        </label>
+      `;
+      listEl.appendChild(card);
+    });
+
+    listEl.querySelectorAll('input[type="checkbox"]').forEach(input => {
+      input.addEventListener('change', (e) => {
+        const id = e.target.getAttribute('data-id');
+        state[id] = e.target.checked;
+        saveState(state);
+        render();
+        updateReadouts();
+        pingStatus();
+      });
+    });
+  }
+
+  function updateReadouts() {
+    const onCount = DEVICES.filter(d => state[d.id]).length;
+    const totalWatt = DEVICES.reduce((sum, d) => sum + (state[d.id] ? d.watt : 0), 0);
+    const baseTemp = 26 + onCount * 0.3;
+    const baseHum = 55 - onCount * 1.2;
+    const jitterTemp = (Math.random() - 0.5) * 0.4;
+    const jitterHum = (Math.random() - 0.5) * 1.5;
+
+    tempEl.textContent = (baseTemp + jitterTemp).toFixed(1) + '°C';
+    humEl.textContent = Math.max(30, Math.round(baseHum + jitterHum)) + '%';
+    powEl.textContent = totalWatt + 'W';
+  }
+
+  function pingStatus() {
+    subEl.textContent = 'อัปเดตล่าสุดเมื่อสักครู่';
+    dotEl.style.background = 'var(--mint-deep)';
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    DEVICES.forEach(d => state[d.id] = false);
+    saveState(state);
+    render();
+    updateReadouts();
+    pingStatus();
+  });
+
+  render();
+  updateReadouts();
+  setInterval(updateReadouts, 4000);
+})();
+</script>
+</body>
+</html>
